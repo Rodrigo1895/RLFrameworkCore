@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RLFrameworkCore\RLFrameworkCore.Dominio.RabbitMq\RLFrameworkCore.Dominio.RabbitMq.csproj" />
+    <ProjectReference Include="..\Exemplo.Web.CrossCutting.Ioc\Exemplo.Web.CrossCutting.Ioc.csproj" />
+  </ItemGroup>
+
+</Project>

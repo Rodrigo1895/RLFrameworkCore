@@ -1,0 +1,13 @@
+{
+  "culture": "pt-BR",
+  "texts": {
+    "CPFJaCadastrado": "CPF já cadastrado.",
+    "NomeUsuarioObrigatorio": "Nome do cliente é obrigatório.",
+    "GeneroInvalido": "Gênero deve ser 'M' ou 'F'.",
+    "ClienteNaoExiste": "Cliente não existe.",
+    "PedidoSemItens": "Pedido deve haver ao menos um item.",
+    "PedidoStatusInvalido": "Status do pedido dever ser 'A' ou 'C'.",
+    "PedidoNaoExiste": "Pedido não existe.",
+    "PedidoJaConcluido": "Pedido já está concluído."
+  }
+}

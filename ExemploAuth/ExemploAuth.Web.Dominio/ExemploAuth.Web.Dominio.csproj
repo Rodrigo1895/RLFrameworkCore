@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localizacao\Arquivos\ExemploAuthApiTextos-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localizacao\Arquivos\ExemploAuthApiTextos-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RLFrameworkCore\RLFrameworkCore.Dominio\RLFrameworkCore.Dominio.csproj" />
+    <ProjectReference Include="..\ExemploAuth.Web.Dto\ExemploAuth.Web.Dto.csproj" />
+  </ItemGroup>
+
+</Project>

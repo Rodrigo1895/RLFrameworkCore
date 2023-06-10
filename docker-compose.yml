@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+    db  :
+        image: mcr.microsoft.com/mssql/server:2019-latest 
+        container_name: exemplo-sql-server-express-2019
+        volumes:
+            - sql-server-express-2019-volume:/var/opt/mssql
+        environment:
+            - 'ACCEPT_EULA=Y'
+            - 'SA_PASSWORD=Root123_'
+            - 'MSSQL_PID=Express'        
+        ports:
+            - '1433:1433'
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: exemplo-rabbitmq
+        hostname: rabbitmq
+        volumes:
+            - rabbitmq-volume:/var/lib/rabbitmq
+        environment:
+            - 'RABBITMQ_DEFAULT_USER=admin'
+            - 'RABBITMQ_DEFAULT_PASS=admin'
+        ports:
+            - '15672:15672'
+            - '5672:5672'
+            
+volumes:
+    sql-server-express-2019-volume:
+    rabbitmq-volume:
