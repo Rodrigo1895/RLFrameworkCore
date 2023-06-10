@@ -1,0 +1,13 @@
+Como gerar as Migrations:
+
+Projeto Exemplo:
+Abrir teminal no projeto Exemplo.Web.Data.SqlServer
+dotnet ef migrations Add Inicial --startup-project ..\Exemplo.Web\
+Aplicar Migrations:
+dotnet ef database update --startup-project ..\Exemplo.Web\
+
+Projeto ExemploAuth:
+Abrir teminal no projeto ExemploAuth.Web.Data.SqlServer
+dotnet ef migrations Add Inicial --startup-project ..\ExemploAuth.Web\
+Aplicar Migrations:
+dotnet ef database update --startup-project ..\ExemploAuth.Web\
