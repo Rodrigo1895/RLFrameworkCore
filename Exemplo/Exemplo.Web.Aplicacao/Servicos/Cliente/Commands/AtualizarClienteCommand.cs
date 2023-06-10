@@ -2,7 +2,7 @@
 using Exemplo.Web.Dto.Cliente.Response;
 using MediatR;
 
-namespace Exemplo.Web.Aplicacao.Commands.Cliente
+namespace Exemplo.Web.Aplicacao.Servicos.Cliente.Commands
 {
     public class AtualizarClienteCommand : IRequest<ClienteDto>
     {

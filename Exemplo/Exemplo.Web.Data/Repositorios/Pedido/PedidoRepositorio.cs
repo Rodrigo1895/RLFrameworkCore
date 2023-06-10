@@ -15,17 +15,17 @@ namespace Exemplo.Web.Data.Repositorios.Pedido
         {
         }
 
-        public async Task<PedidoDto> BuscarPedidoCompletoPorId(int idPedido)
+        public async Task<PedidoDto> BuscarPedidoCompletoPorId(int idPedido, CancellationToken cancellationToken = default)
         {
             var pedido = await BuscarTodos(x => x.IdPedido == idPedido).AsNoTracking()
                 .Include(x => x.Cliente)
                 .Include(x => x.PedidoItens.OrderBy(y => y.IdItem)).ThenInclude(x => x.Produto)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
 
             return pedido.MapTo<PedidoDto>();
         }
 
-        public async Task<IListDto<PedidoDto>> BuscarPedidos(BuscarPedidosDto dto)
+        public async Task<IListDto<PedidoDto>> BuscarPedidos(BuscarPedidosDto dto, CancellationToken cancellationToken = default)
         {
             IQueryable<PedidoEntidade> query = BuscarTodos().OrderBy(x => x.IdPedido);
 
@@ -55,7 +55,7 @@ namespace Exemplo.Web.Data.Repositorios.Pedido
 
             #endregion
 
-            return await query.ToListDtoAsync<PedidoEntidade, PedidoDto>(dto);
+            return await query.ToListDtoAsync<PedidoEntidade, PedidoDto>(dto, cancellationToken);
         }       
     }
 }

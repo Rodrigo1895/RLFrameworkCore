@@ -17,13 +17,16 @@ namespace Exemplo.Web.Aplicacao.RabbitMq.Producers
 
         protected override void ConfigInit(IModel channel)
         {
-            channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct, durable: true);
+            var queueNotificarFinanceiro = "notificarFinanceiro";
+            var queueEnviarEmailCliente = "enviarEmailCliente";
 
-            channel.QueueDeclare(queue: "notificarFinanceiro", durable: true, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind("notificarFinanceiro", ExchangeName, RoutingKeyName);
+            channel.ExchangeDeclare(exchange: ExchangeName, type: ExchangeType.Direct, durable: true);
 
-            channel.QueueDeclare(queue: "enviarEmailCliente", durable: true, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind("enviarEmailCliente", ExchangeName, RoutingKeyName);
+            channel.QueueDeclare(queue: queueNotificarFinanceiro, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            channel.QueueBind(queue: queueNotificarFinanceiro, exchange: ExchangeName, routingKey: RoutingKeyName);
+
+            channel.QueueDeclare(queue: queueEnviarEmailCliente, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            channel.QueueBind(queue: queueEnviarEmailCliente, exchange: ExchangeName, routingKey: RoutingKeyName);
         }
     }
 }

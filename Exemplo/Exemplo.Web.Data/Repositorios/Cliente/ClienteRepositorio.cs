@@ -15,7 +15,7 @@ namespace Exemplo.Web.Data.Repositorios.Cliente
         {
         }
 
-        public async Task<IListDto<ClienteDto>> BuscarClientes(BuscarClientesDto dto)
+        public async Task<IListDto<ClienteDto>> BuscarClientes(BuscarClientesDto dto, CancellationToken cancellationToken = default)
         {
             var query = BuscarTodos();
 
@@ -25,7 +25,7 @@ namespace Exemplo.Web.Data.Repositorios.Cliente
             if(!string.IsNullOrWhiteSpace(dto.Genero))
                 query = query.Where(x => x.Genero == dto.Genero);
 
-            return await query.ToListDtoAsync<ClienteEntidade, ClienteDto>(dto);
+            return await query.ToListDtoAsync<ClienteEntidade, ClienteDto>(dto, cancellationToken);
         }
     }
 }

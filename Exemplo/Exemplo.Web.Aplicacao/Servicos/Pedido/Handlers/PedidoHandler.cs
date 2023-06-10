@@ -1,5 +1,5 @@
-﻿using Exemplo.Web.Aplicacao.Commands.Pedido;
-using Exemplo.Web.Aplicacao.RabbitMq.Messages;
+﻿using Exemplo.Web.Aplicacao.RabbitMq.Messages;
+using Exemplo.Web.Aplicacao.Servicos.Pedido.Commands;
 using Exemplo.Web.Aplicacao.Servicos.Pedido.Validacoes;
 using Exemplo.Web.Data.Contextos;
 using Exemplo.Web.Dominio;
@@ -14,7 +14,7 @@ using RLFrameworkCore.Dominio.Servico;
 using RLFrameworkCore.Notificacao.Notificacao.Interfaces;
 using RLFrameworkCore.Repositorio.UnitOfWork.Interfaces;
 
-namespace Exemplo.Web.Aplicacao.Handlers
+namespace Exemplo.Web.Aplicacao.Servicos.Pedido.Handlers
 {
     public class PedidoHandler : HandlerBase,
         IRequestHandler<AdicionarPedidoCommand, PedidoDto>,
@@ -52,11 +52,11 @@ namespace Exemplo.Web.Aplicacao.Handlers
 
             await using (var controleTransacao = _unitOfWork.Begin())
             {
-                var pedidoInserido = await _pedidoRepositorio.AdicionarAsync(pedidoEntidade);
+                var pedidoInserido = await _pedidoRepositorio.AdicionarAsync(pedidoEntidade, cancellationToken);
 
-                if (await Commit(controleTransacao))
+                if (await Commit(controleTransacao, cancellationToken))
                 {
-                    return pedidoInserido.MapTo<PedidoDto>();
+                    return await BuscarPorId(pedidoInserido.IdPedido, cancellationToken);
                 }
 
                 return null;
@@ -65,7 +65,7 @@ namespace Exemplo.Web.Aplicacao.Handlers
 
         public async Task<PedidoDto> Handle(ConcluirPedidoCommand request, CancellationToken cancellationToken)
         {
-            var pedido = await _pedidoRepositorio.BuscarAsync(x => x.IdPedido == request.IdPedido);
+            var pedido = await _pedidoRepositorio.BuscarAsync(x => x.IdPedido == request.IdPedido, cancellationToken);
             if (pedido == null)
             {
                 Notificacao.AddNotificacao("", EnumMensagensErro.PedidoNaoExiste, Constants.NomeErroSource);
@@ -78,11 +78,17 @@ namespace Exemplo.Web.Aplicacao.Handlers
                 return null;
             }
             pedido.ConcluirPedido();
-            await _pedidoRepositorio.AtualizarAsync(pedido);
+            await _pedidoRepositorio.AtualizarAsync(pedido, cancellationToken);
 
-            _rabbitMqPedidoConcluido.Publish(pedido.MapTo<PedidoConcluidoMessage>());
+            var pedidoDto = await BuscarPorId(pedido.IdPedido, cancellationToken);
+            _rabbitMqPedidoConcluido.Publish(pedidoDto.MapTo<PedidoConcluidoMessage>());
 
-            return pedido.MapTo<PedidoDto>();
+            return pedidoDto;
+        }
+
+        private async Task<PedidoDto> BuscarPorId(int idPedido, CancellationToken cancellationToken)
+        {
+            return await _pedidoRepositorio.BuscarPedidoCompletoPorId(idPedido, cancellationToken);
         }
     }
 }

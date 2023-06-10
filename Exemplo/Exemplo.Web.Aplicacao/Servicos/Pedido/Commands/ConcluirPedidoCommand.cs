@@ -1,7 +1,7 @@
 ﻿using Exemplo.Web.Dto.Pedido.Response;
 using MediatR;
 
-namespace Exemplo.Web.Aplicacao.Commands.Pedido
+namespace Exemplo.Web.Aplicacao.Servicos.Pedido.Commands
 {
     public class ConcluirPedidoCommand : IRequest<PedidoDto>
     {

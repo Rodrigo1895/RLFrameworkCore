@@ -6,11 +6,11 @@ namespace System.Linq
 {
     public static class RepositorioIQueryableExtensions
     {
-        public static async Task<IListDto<TDto>> ToListDtoAsync<TEntidade, TDto>(this IQueryable<TEntidade> query, IRequestAllDto dto) where TEntidade : class
+        public static async Task<IListDto<TDto>> ToListDtoAsync<TEntidade, TDto>(this IQueryable<TEntidade> query, IRequestAllDto dto, CancellationToken cancellationToken = default) where TEntidade : class
         {
             try
             {
-                var itens = await PaginacaoAsync(query, dto.Pagina, dto.PaginaTamanho);
+                var itens = await PaginacaoAsync(query, dto.Pagina, dto.PaginaTamanho, cancellationToken);
 
                 var retorno =  new ListDto<TDto>()
                 {
@@ -30,11 +30,11 @@ namespace System.Linq
             }
         }
         
-        public static async Task<IListDto<T>> ToListDtoAsync<T>(this IQueryable<T> query, IRequestAllDto dto)
+        public static async Task<IListDto<T>> ToListDtoAsync<T>(this IQueryable<T> query, IRequestAllDto dto, CancellationToken cancellationToken = default)
         {
             try
             {
-                return await PaginacaoAsync(query, dto.Pagina, dto.PaginaTamanho);
+                return await PaginacaoAsync(query, dto.Pagina, dto.PaginaTamanho, cancellationToken);
             }
             catch (ArgumentException ex)
             {
@@ -45,7 +45,8 @@ namespace System.Linq
         private static async Task<IListDto<TEntidade>> PaginacaoAsync<TEntidade>(
             IQueryable<TEntidade> query,
             int pagina,
-            int paginaTamanho)
+            int paginaTamanho,
+            CancellationToken cancellationToken = default)
         {
             var paginacao = new ListDto<TEntidade>();
 
@@ -53,13 +54,13 @@ namespace System.Linq
 
             paginacao.PaginaAtual = pagina;
 
-            var totalItens = await query.CountAsync();
+            var totalItens = await query.CountAsync(cancellationToken);
 
             var inicio = (pagina - 1) * paginaTamanho;
             paginacao.Itens = await query
                        .Skip(inicio)
                        .Take(paginaTamanho)
-                       .ToListAsync();
+                       .ToListAsync(cancellationToken);
 
             paginacao.TotalItens = totalItens;
             paginacao.TotalPaginas = (int)Math.Ceiling(paginacao.TotalItens / (double)paginaTamanho);

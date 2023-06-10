@@ -24,9 +24,9 @@ namespace RLFrameworkCore.Dominio.Servico
             return ServicoUtils.ValidarEntidade(Notificacao, entidade);
         }
 
-        public async Task<bool> Commit(IUnitOfWork uow)
+        public async Task<bool> Commit(IUnitOfWork uow, CancellationToken cancellationToken = default)
         {
-            return await ServicoUtils.Commit(Notificacao, uow);
+            return await ServicoUtils.Commit(Notificacao, uow, cancellationToken);
         }
     }
 }

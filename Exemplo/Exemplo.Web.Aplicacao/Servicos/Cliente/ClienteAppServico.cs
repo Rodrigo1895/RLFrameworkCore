@@ -1,4 +1,4 @@
-﻿using Exemplo.Web.Aplicacao.Commands.Cliente;
+﻿using Exemplo.Web.Aplicacao.Servicos.Cliente.Commands;
 using Exemplo.Web.Aplicacao.Servicos.Cliente.Validacoes;
 using Exemplo.Web.Dominio.Interfaces.Repositorios;
 using Exemplo.Web.Dto.Cliente.Request;
@@ -22,17 +22,17 @@ namespace Exemplo.Web.Aplicacao.Servicos.Cliente
             _mediator = mediator;
         }
 
-        public async Task<ClienteDto> Adicionar(AdicionarClienteDto dto)
+        public async Task<ClienteDto> Adicionar(AdicionarClienteDto dto, CancellationToken cancellationToken)
         {
             var command = new AdicionarClienteCommand
             {
                 Dto = dto
             };
 
-            return await _mediator.Send(command);
+            return await _mediator.Send(command, cancellationToken);
         }
 
-        public async Task<ClienteDto> Atualizar(int idCliente, AtualizarClienteDto dto)
+        public async Task<ClienteDto> Atualizar(int idCliente, AtualizarClienteDto dto, CancellationToken cancellationToken)
         {
             var command = new AtualizarClienteCommand
             {
@@ -40,17 +40,17 @@ namespace Exemplo.Web.Aplicacao.Servicos.Cliente
                 Dto = dto
             };
 
-            return await _mediator.Send(command);
+            return await _mediator.Send(command, cancellationToken);
         }
 
-        public async Task<bool> Deletar(int idCliente)
+        public async Task<bool> Deletar(int idCliente, CancellationToken cancellationToken)
         {
             var command = new DeletarClienteCommand
             {
                 IdCliente = idCliente
             };
 
-            return await _mediator.Send(command);
+            return await _mediator.Send(command, cancellationToken);
         }
 
         public async Task<ClienteDto> BuscarPorId(int idCliente)
@@ -72,7 +72,5 @@ namespace Exemplo.Web.Aplicacao.Servicos.Cliente
 
             return await _clienteRepositorio.BuscarClientes(dto);
         }        
-
-        
     }
 }

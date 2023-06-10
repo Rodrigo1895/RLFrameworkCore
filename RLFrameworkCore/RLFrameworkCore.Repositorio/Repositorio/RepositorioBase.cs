@@ -14,7 +14,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T> AdicionarAsync(T entidade, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> AdicionarAsync(T entidade, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             }
         }
 
-        public async Task<IList<T>> AdicionarListaAsync(IList<T> entidades, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IList<T>> AdicionarListaAsync(IList<T> entidades, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             }
         }
 
-        public async Task<T> AtualizarAsync(T entidade, CancellationToken cancellationToken = default(CancellationToken), params Expression<Func<T, object>>[] propriedadesAtualizar)
+        public async Task<T> AtualizarAsync(T entidade, CancellationToken cancellationToken = default, params Expression<Func<T, object>>[] propriedadesAtualizar)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             }
         }
 
-        public async Task<bool> DeletarAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<bool> DeletarAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             }
         }
 
-        public async Task<T> BuscarAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> BuscarAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace RLFrameworkCore.Repositorio.Repositorio
             }
         }
 
-        private async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken);
         }

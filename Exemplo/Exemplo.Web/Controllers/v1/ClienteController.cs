@@ -27,9 +27,9 @@ namespace Exemplo.Web.Controllers.v1
         [ProducesResponseType(typeof(ClienteDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<IActionResult> Adicionar([FromBody] AdicionarClienteDto dto)
+        public async Task<IActionResult> Adicionar([FromBody] AdicionarClienteDto dto, CancellationToken cancellationToken)
         {
-            var response = await _clienteAppServico.Adicionar(dto);
+            var response = await _clienteAppServico.Adicionar(dto, cancellationToken);
 
             return ResponsePost(response);
         }
@@ -38,9 +38,9 @@ namespace Exemplo.Web.Controllers.v1
         [ProducesResponseType(typeof(ClienteDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<IActionResult> Atualizar([FromRoute] int idCliente, [FromBody] AtualizarClienteDto dto)
+        public async Task<IActionResult> Atualizar([FromRoute] int idCliente, [FromBody] AtualizarClienteDto dto, CancellationToken cancellationToken)
         {
-            var response = await _clienteAppServico.Atualizar(idCliente, dto);
+            var response = await _clienteAppServico.Atualizar(idCliente, dto, cancellationToken);
 
             return ResponsePut(response);
         }
@@ -49,9 +49,9 @@ namespace Exemplo.Web.Controllers.v1
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<IActionResult> Deletar([FromRoute] int idCliente)
+        public async Task<IActionResult> Deletar([FromRoute] int idCliente, CancellationToken cancellationToken)
         {
-            var response = await _clienteAppServico.Deletar(idCliente);
+            var response = await _clienteAppServico.Deletar(idCliente, cancellationToken);
 
             return ResponseDelete(response);
         }

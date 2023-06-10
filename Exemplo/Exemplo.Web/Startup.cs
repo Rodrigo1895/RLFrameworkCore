@@ -3,7 +3,6 @@ using Exemplo.Web.Data.Contextos;
 using Exemplo.Web.Dominio;
 using Exemplo.Web.Middlewares;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -33,13 +32,11 @@ namespace Exempslo.Web
                     });
             });
 
-            services.AddControllers(options =>
-            {
-                options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider());
-            }).AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            });            
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });            
 
             services.AddVersionamentoApiConfiguracao()
                 .AddSwaggerConfiguracao();

@@ -8,8 +8,8 @@ namespace RLFrameworkCore.Dominio.RabbitMq
 {
     public abstract class RabbitMqConsumerBase<T> : BackgroundService
     {
-        private RabbitMqConnection _rabbitMqConnection;
-        private IModel _channel;
+        private readonly RabbitMqConnection _rabbitMqConnection;
+        private readonly IModel _channel;
         protected abstract string QueueName { get; }
 
         protected RabbitMqConsumerBase(RabbitMqConnection rabbitMqConnection)

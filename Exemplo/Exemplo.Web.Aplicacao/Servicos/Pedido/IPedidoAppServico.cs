@@ -7,9 +7,9 @@ namespace Exemplo.Web.Aplicacao.Servicos.Pedido
 {
     public interface IPedidoAppServico : IAppServicoBase
     {
-        Task<PedidoDto> AdicionarPedido(AdicionarPedidoDto dto);
+        Task<PedidoDto> AdicionarPedido(AdicionarPedidoDto dto, CancellationToken cancellationToken);
+        Task<PedidoDto> ConcluirPedido(int idPedido, CancellationToken cancellationToken);
         Task<PedidoDto> BuscarPorId(int idPedido);
         Task<IListDto<PedidoDto>> Buscar(BuscarPedidosDto dto);        
-        Task<PedidoDto> ConcluirPedido(int idPedido);
     }
 }

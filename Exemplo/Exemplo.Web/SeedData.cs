@@ -9,7 +9,7 @@ namespace Exemplo.Web
     {
         public static void AddSeedData(WebApplication app)
         {
-            Random random = new Random();
+            var random = new Random();
 
             var scope = app.Services.CreateScope();
             using (var context = scope.ServiceProvider.GetRequiredService<AppContexto>())

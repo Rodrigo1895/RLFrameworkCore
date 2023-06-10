@@ -1,4 +1,4 @@
-﻿namespace Exemplo.Web.Aplicacao.RabbitMq.Messages
+﻿namespace Exemplo.Web.RabbitMq.Consumer.Messages
 {
     public class PedidoConcluidoMessage
     {

@@ -8,7 +8,7 @@ namespace Exemplo.Web.Dominio.Interfaces.Repositorios
 {
     public interface IPedidoRepositorio : IRepositorio<PedidoEntidade>, IRepositorioLeitura<PedidoEntidade>
     {
-        Task<PedidoDto> BuscarPedidoCompletoPorId(int idPedido);
-        Task<IListDto<PedidoDto>> BuscarPedidos(BuscarPedidosDto dto);        
+        Task<PedidoDto> BuscarPedidoCompletoPorId(int idPedido, CancellationToken cancellationToken = default);
+        Task<IListDto<PedidoDto>> BuscarPedidos(BuscarPedidosDto dto, CancellationToken cancellationToken = default);        
     }
 }

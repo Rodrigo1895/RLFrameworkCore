@@ -13,24 +13,24 @@ namespace RLFrameworkCore.Repositorio.UnitOfWork
             _contexto = contexto;
             _transacao = _contexto.Database.BeginTransaction();
         }
-        public async Task CompleteAsync()
+        public async Task CompleteAsync(CancellationToken cancellationToken = default)
         {
             try
             {
-                await _contexto.SaveChangesAsync();
-                await _transacao.CommitAsync();
+                await _contexto.SaveChangesAsync(cancellationToken);
+                await _transacao.CommitAsync(cancellationToken);
                 await DisposeAsync();
             }
             catch (DbUpdateException ex)
             {
-                await RollbackAsync();
+                await RollbackAsync(cancellationToken);
                 throw new DbUpdateException($"Erro ao efetuar commit de transação  - [UnitOfWork.CompleteAsync]", ex);
             }
         }
 
-        public async Task RollbackAsync()
+        public async Task RollbackAsync(CancellationToken cancellationToken = default)
         {
-            await _transacao.RollbackAsync();
+            await _transacao.RollbackAsync(cancellationToken);
             await DisposeAsync();
         }
 

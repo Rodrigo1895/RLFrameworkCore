@@ -1,4 +1,4 @@
-﻿using Exemplo.Web.Aplicacao.Commands.Cliente;
+﻿using Exemplo.Web.Aplicacao.Servicos.Cliente.Commands;
 using Exemplo.Web.Aplicacao.Servicos.Cliente.Validacoes;
 using Exemplo.Web.Dominio;
 using Exemplo.Web.Dominio.Entidades.Cliente;
@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using RLFrameworkCore.Dominio.Servico;
 using RLFrameworkCore.Notificacao.Notificacao.Interfaces;
 
-namespace Exemplo.Web.Aplicacao.Handlers
+namespace Exemplo.Web.Aplicacao.Servicos.Cliente.Handlers
 {
     public class ClienteHandler : HandlerBase,
         IRequestHandler<AdicionarClienteCommand, ClienteDto>,
@@ -35,38 +35,38 @@ namespace Exemplo.Web.Aplicacao.Handlers
             if (!ValidarEntidade(clienteEntidade))
                 return null;
 
-            var clienteInserido = await _clienteRepositorio.AdicionarAsync(clienteEntidade);
+            var clienteInserido = await _clienteRepositorio.AdicionarAsync(clienteEntidade, cancellationToken);
             return clienteInserido.MapTo<ClienteDto>();
         }
 
         public async Task<ClienteDto> Handle(AtualizarClienteCommand request, CancellationToken cancellationToken)
         {
-            var cliente = await BuscarClienteValidar(request.IdCliente);
+            var cliente = await BuscarClienteValidar(request.IdCliente, cancellationToken);
             if (cliente == null)
                 return null;
 
             cliente = request.Dto.MapTo(cliente);
             if (!ValidarEntidade(cliente))
                 return null;
-            cliente = await _clienteRepositorio.AtualizarAsync(cliente);
+            cliente = await _clienteRepositorio.AtualizarAsync(cliente, cancellationToken);
 
             return cliente.MapTo<ClienteDto>();
         }
 
         public async Task<bool> Handle(DeletarClienteCommand request, CancellationToken cancellationToken)
         {
-            var cliente = await BuscarClienteValidar(request.IdCliente);
+            var cliente = await BuscarClienteValidar(request.IdCliente, cancellationToken);
             if (cliente == null)
                 return false;
 
-            var retorno = await _clienteRepositorio.DeletarAsync(x => x.IdCliente == request.IdCliente);
+            var retorno = await _clienteRepositorio.DeletarAsync(x => x.IdCliente == request.IdCliente, cancellationToken);
 
             return retorno;
         }
 
-        private async Task<ClienteEntidade> BuscarClienteValidar(int idCliente)
+        private async Task<ClienteEntidade> BuscarClienteValidar(int idCliente, CancellationToken cancellationToken)
         {
-            var cliente = await _clienteRepositorio.BuscarTodos(x => x.IdCliente == idCliente).FirstOrDefaultAsync();
+            var cliente = await _clienteRepositorio.BuscarTodos(x => x.IdCliente == idCliente).FirstOrDefaultAsync(cancellationToken);
 
             if (cliente == null)
             {

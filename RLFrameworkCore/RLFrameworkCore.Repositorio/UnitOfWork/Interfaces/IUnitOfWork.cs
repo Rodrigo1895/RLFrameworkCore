@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork : IAsyncDisposable
     {
-        Task CompleteAsync();
-        Task RollbackAsync();
+        Task CompleteAsync(CancellationToken cancellationToken = default);
+        Task RollbackAsync(CancellationToken cancellationToken = default);
     }
 }

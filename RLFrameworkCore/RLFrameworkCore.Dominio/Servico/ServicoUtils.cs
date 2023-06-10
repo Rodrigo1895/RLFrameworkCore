@@ -65,16 +65,16 @@ namespace RLFrameworkCore.Dominio.Servico
             return valido;
         }
 
-        public static async Task<bool> Commit(INotificacaoContexto notificacao, IUnitOfWork uow)
+        public static async Task<bool> Commit(INotificacaoContexto notificacao, IUnitOfWork uow, CancellationToken cancellationToken = default)
         {
             if (!notificacao.HasNotificacoes)
             {
-                await uow.CompleteAsync();
+                await uow.CompleteAsync(cancellationToken);
                 return true;
             }
             else
             {
-                await uow.RollbackAsync();
+                await uow.RollbackAsync(cancellationToken);
                 return false;
             }
         }

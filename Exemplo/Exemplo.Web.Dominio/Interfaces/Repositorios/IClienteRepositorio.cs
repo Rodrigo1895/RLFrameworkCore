@@ -8,6 +8,6 @@ namespace Exemplo.Web.Dominio.Interfaces.Repositorios
 {
     public interface IClienteRepositorio : IRepositorio<ClienteEntidade>, IRepositorioLeitura<ClienteEntidade>
     {
-        Task<IListDto<ClienteDto>> BuscarClientes(BuscarClientesDto dto);
+        Task<IListDto<ClienteDto>> BuscarClientes(BuscarClientesDto dto, CancellationToken cancellationToken = default);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Exemplo.Web.Aplicacao.RabbitMq.Messages;
-using Exemplo.Web.Dominio.Entidades.Pedido;
+using Exemplo.Web.Dto.Pedido.Response;
 
 namespace Exemplo.Web.Aplicacao.AutoMapper.Profiles.RabbitMq
 {
@@ -8,8 +8,9 @@ namespace Exemplo.Web.Aplicacao.AutoMapper.Profiles.RabbitMq
     {
         public PedidoConcluidoMessageProfile()
         {
-            CreateMap<PedidoEntidade, PedidoConcluidoMessage>();
-            CreateMap<PedidoItemEntidade, PedidoItemConcluidoMessage>();
+            CreateMap<PedidoDto, PedidoConcluidoMessage>();
+            CreateMap<PedidoItemDto, PedidoItemConcluidoMessage>()
+                .ForMember(dest => dest.IdProduto, opt => opt.MapFrom(src => src.Produto.IdProduto));
         }
     }
 }

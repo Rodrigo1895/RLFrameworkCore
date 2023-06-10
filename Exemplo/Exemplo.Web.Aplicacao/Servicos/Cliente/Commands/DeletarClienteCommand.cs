@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Exemplo.Web.Aplicacao.Commands.Cliente
+namespace Exemplo.Web.Aplicacao.Servicos.Cliente.Commands
 {
     public class DeletarClienteCommand : IRequest<bool>
     {

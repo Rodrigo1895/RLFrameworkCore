@@ -1,4 +1,4 @@
-﻿using Exemplo.Web.Aplicacao.Commands.Pedido;
+﻿using Exemplo.Web.Aplicacao.Servicos.Pedido.Commands;
 using Exemplo.Web.Aplicacao.Servicos.Pedido.Validacoes;
 using Exemplo.Web.Dominio.Interfaces.Repositorios;
 using Exemplo.Web.Dto.Pedido.Request;
@@ -24,26 +24,24 @@ namespace Exemplo.Web.Aplicacao.Servicos.Pedido
             _pedidoRepositorio = pedidoRepositorio;
         }
 
-        public async Task<PedidoDto> AdicionarPedido(AdicionarPedidoDto dto)
+        public async Task<PedidoDto> AdicionarPedido(AdicionarPedidoDto dto, CancellationToken cancellationToken)
         {
             var command = new AdicionarPedidoCommand
             {
                 Dto = dto
             };
 
-            var pedido = await _mediator.Send(command);
-            return pedido != null ? await BuscarPorId(pedido.IdPedido) : null;
+            return await _mediator.Send(command, cancellationToken);
         }
 
-        public async Task<PedidoDto> ConcluirPedido(int idPedido)
+        public async Task<PedidoDto> ConcluirPedido(int idPedido, CancellationToken cancellationToken)
         {
             var command = new ConcluirPedidoCommand
             {
                 IdPedido = idPedido
             };
 
-            var pedido = await _mediator.Send(command);
-            return pedido != null ? await BuscarPorId(pedido.IdPedido) : null;
+            return  await _mediator.Send(command, cancellationToken);
         }
 
         public async Task<PedidoDto> BuscarPorId(int idPedido)
@@ -55,6 +53,9 @@ namespace Exemplo.Web.Aplicacao.Servicos.Pedido
         {
             if (!await ValidarDto(new ValidarBuscarPedidosDto(), dto))
                 return null;
+
+            dto.DataInicial = dto.DataInicial?.ChangeTime(0, 0, 0);
+            dto.DataFinal = dto.DataFinal?.ChangeTime(23, 59, 59);
 
             return await _pedidoRepositorio.BuscarPedidos(dto);
         }

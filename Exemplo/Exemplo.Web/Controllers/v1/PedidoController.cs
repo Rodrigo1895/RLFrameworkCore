@@ -27,9 +27,9 @@ namespace Exemplo.Web.Controllers.v1
         [ProducesResponseType(typeof(PedidoDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<IActionResult> Adicionar([FromBody] AdicionarPedidoDto dto)
+        public async Task<IActionResult> Adicionar([FromBody] AdicionarPedidoDto dto, CancellationToken cancellationToken)
         {
-            var response = await _pedidoAppServico.AdicionarPedido(dto);
+            var response = await _pedidoAppServico.AdicionarPedido(dto, cancellationToken);
 
             return ResponsePost(response);
         }
@@ -38,9 +38,9 @@ namespace Exemplo.Web.Controllers.v1
         [ProducesResponseType(typeof(PedidoDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<IActionResult> ConcluirPedido([FromRoute] int idPedido)
+        public async Task<IActionResult> ConcluirPedido([FromRoute] int idPedido, CancellationToken cancellationToken)
         {
-            var response = await _pedidoAppServico.ConcluirPedido(idPedido);
+            var response = await _pedidoAppServico.ConcluirPedido(idPedido, cancellationToken);
 
             return ResponsePut(response);
         }
