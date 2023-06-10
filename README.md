@@ -9,7 +9,7 @@
 </div>
 
 ## :question: O que é?
-É um projeto de um framework, onde implementa as tecnologias mais utilizadas e os principais padrões de projetos.
+É um projeto de um framework .NET, onde implementa as tecnologias mais utilizadas e os principais padrões de projetos.
 
 ## :white_check_mark: Como executar:
 - Ter instalado o Visual Studio 2022 e .NET Core SDK 7.0
