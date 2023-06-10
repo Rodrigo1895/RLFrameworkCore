@@ -4,7 +4,8 @@
 ## Como executar:
 - Ter instalado o Visual Studio 2022 e .NET Core SDK 7.0
 - Ter o Docker instalado
-- Subir o docker-compose do projeto para utilização do Sql Server e do RabbitMQ
+- Subir o docker-compose para utilização do Sql Server e do RabbitMQ
+- Buildar o projeto **RLFrameworkCore** para geração das DLLs do framework que são dependências nos projetos **ExemploAuth** e **Exemplo**
   
 - **ExemploAuth**:
   - Responsável por gerar o token de autenticação. Utilizar usuário 'Rodrigo' e senha '123' para autenticação.
